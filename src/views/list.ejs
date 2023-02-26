@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+
+<head>
+
+    <title>Products</title>
+
+    <style>
+
+        .pagination a {
+
+            color: black;
+
+            float: left;
+
+            padding: 12px 18px;
+
+            text-decoration: none;
+
+        }
+
+        /* thiết lập style cho class active */
+
+        .pagination a.active {
+
+            background-color: dodgerblue;
+
+            color: white;
+
+            /*Thiết kế hình tròn với CSS*/
+
+            border-radius: 50%;
+
+        }
+
+        /* thêm màu nền khi người dùng hover vào class không active */
+
+        .pagination a:hover:not(.active) {
+
+            background-color: #ddd;
+
+            /*Thiết kế hình tròn với CSS*/
+
+            border-radius: 50%;
+
+        }
+
+    </style>
+
+</head>
+
+
+
+<body>
+
+<h2>List Products</h2>
+
+<% for(const cutomers of customer) { %>
+
+    <h3>
+        Name: <%= cutomers.name %>
+
+    </h3>
+
+    <p>
+
+        Code: <%= cutomers.code %>
+
+    </p>
+
+    <p>
+
+        Email: <%= cutomers.email %>
+
+    </p>
+
+    <p>
+
+        Phone: <%= cutomers.phone %>
+
+    </p>
+        <h4><a href="/customer/update/?id=<%= cutomers.id %>">Update</a></h4>
+        <h4><a onclick=" return confirm('Are you sure ?');"  href="/customer/delete/?id=<%= cutomers.id %>">Delete</a></h4>
+
+    </br>
+
+<% } %>
+
+<div class="pagination">
+
+    <a href="#">«</a>
+
+    <a href="http://localhost:5000/customer/list?offset=0&limit=3">1</a>
+
+    <a href="http://localhost:5000/customer/list?offset=1&limit=3">2</a>
+
+    <a href="http://localhost:5000/customer/list?offset=2&limit=3">3</a>
+
+    <a href="http://localhost:5000/customer/list?offset=3&limit=3">4</a>
+
+    <a href="http://localhost:5000/customer/list?offset=4&limit=3">5</a>
+
+    <a href="http://localhost:5000/customer/list?offset=5&limit=3">6</a>
+
+    <a href="#">»</a>
+
+</div>
+
+</body>
+
+
+
+</html>
