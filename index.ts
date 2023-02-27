@@ -14,5 +14,5 @@ mongoose.connect(DB_URL).then(()=>{
 });
 app.use('/customer',customerRouter)
 app.listen(5000,()=>{
-    console.log('http://localhost:5000/create')
+    console.log('http://localhost:5000/customer/create')
 })

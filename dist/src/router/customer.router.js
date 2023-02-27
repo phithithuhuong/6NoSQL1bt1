@@ -28,18 +28,23 @@ customerRouter.post('/create', upload.none(), async (req, res) => {
 });
 customerRouter.get('/list', async (req, res) => {
     try {
-        let limit;
-        let offset;
-        if (!req.query.limit || !req.query.limit) {
-            limit = 3;
-            offset = 0;
+        if (req.method === "GET") {
+            let limit;
+            let offset;
+            if (!req.query.limit || !req.query.limit) {
+                limit = 3;
+                offset = 0;
+            }
+            else {
+                limit = parseInt(req.query.limit);
+                offset = parseInt(req.query.offset);
+            }
+            const customers = await customer_model_1.Customer.find().limit(limit).skip(limit * offset);
+            res.render('list', { customer: customers });
         }
         else {
-            limit = parseInt(req.query.limit);
-            offset = parseInt(req.query.offset);
+            console.log(req.query.search);
         }
-        const customers = await customer_model_1.Customer.find().limit(limit).skip(limit * offset);
-        res.render('list', { customer: customers });
     }
     catch (err) {
         console.log(err.message);
@@ -55,12 +60,12 @@ customerRouter.get('/update', async (req, res) => {
         console.log(err);
     }
 });
-customerRouter.post(`/update`, async (req, res) => {
+customerRouter.post(`/update`, upload.none(), async (req, res) => {
     try {
         let id = req.query.id;
+        console.log(id);
         let values = req.body;
-        const customers = await customer_model_1.Customer.updateOne({ id }, { values });
-        console.log(customers, 222);
+        const customers = await customer_model_1.Customer.findOneAndUpdate({ id }, values);
         res.redirect('/customer/list');
     }
     catch (err) {

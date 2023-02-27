@@ -42,6 +42,6 @@ mongoose.connect(DB_URL).then(() => {
 });
 app.use('/customer', customer_router_1.default);
 app.listen(5000, () => {
-    console.log('http://localhost:5000/create');
+    console.log('http://localhost:5000/customer/create');
 });
 //# sourceMappingURL=index.js.map

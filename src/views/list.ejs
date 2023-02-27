@@ -58,6 +58,20 @@
 <body>
 
 <h2>List Products</h2>
+<form action="/customer/list" method="GET">
+
+    <label>Name:</label>
+
+    <input type="text" id="name" name="search">
+
+    </br>
+
+    <div class="form-group">
+
+        <button type="submit" class="btn btn-primary" >Search</button></div>
+
+</form>
+
 
 <% for(const cutomers of customer) { %>
 

@@ -22,19 +22,25 @@ customerRouter.post('/create',upload.none(), async (req, res) => {
 })
 customerRouter.get('/list',async (req, res) => {
     try{
-        let limit:number;
-        let offset: number;
-        if(!req.query.limit||!req.query.limit){
-            limit = 3;
-            offset =0 ;
+        if(req.method==="GET"){
+            let limit:number;
+            let offset: number;
+            if(!req.query.limit||!req.query.limit){
+                limit = 3;
+                offset =0 ;
+            } else {
+                limit = parseInt(req.query.limit as string)
+                offset = parseInt(req.query.offset as string)
+            }
+            //limit(number): Số bản ghi tối đa được lấy
+            // skip(number): Lấy bản ghi từ vị trí number (Bỏ qua các bản ghi trước đó).
+            const customers = await Customer.find().limit(limit).skip(limit*offset);
+            res.render('list',{customer: customers});
         } else {
-            limit = parseInt(req.query.limit as string)
-            offset = parseInt(req.query.offset as string)
+            console.log(req.query.search)
         }
-        //limit(number): Số bản ghi tối đa được lấy
-        // skip(number): Lấy bản ghi từ vị trí number (Bỏ qua các bản ghi trước đó).
-        const customers = await Customer.find().limit(limit).skip(limit*offset);
-        res.render('list',{customer: customers});
+
+
 
     }catch (err){
         console.log(err.message)
@@ -51,12 +57,13 @@ customerRouter.get('/update',async (req, res) => {
         console.log(err)
     }
 });
-customerRouter.post(`/update`,async (req, res) => {
+customerRouter.post(`/update`, upload.none(),async (req, res) => {
     try {
         let id = req.query.id;
+        console.log(id)
         let values = req.body
-        const customers = await Customer. findById(id).updateOne();
-        console.log(customers,222)
+        const customers = await Customer.findOneAndUpdate({id}, values)
+        // console.log(customers,222)
         res.redirect('/customer/list')
     }catch (err){
         console.log(err)
