@@ -7,7 +7,7 @@ const customerSchema = new mongoose_1.Schema({
     name: String,
     code: Number,
     email: String,
-    phone: String
+    phone: String,
 });
 const Customer = (0, mongoose_1.model)('Customer', customerSchema);
 exports.Customer = Customer;

@@ -7,7 +7,7 @@ interface ICustomer {
 
     email: string;
 
-    phone: string
+    phone: string;
 };
 const customerSchema = new Schema<ICustomer>({
     name: String,
@@ -16,7 +16,7 @@ const customerSchema = new Schema<ICustomer>({
 
     email: String,
 
-    phone: String
+    phone: String,
 });
 
 const Customer = model<ICustomer>('Customer', customerSchema);

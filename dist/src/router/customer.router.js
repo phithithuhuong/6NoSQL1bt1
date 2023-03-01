@@ -28,23 +28,28 @@ customerRouter.post('/create', upload.none(), async (req, res) => {
 });
 customerRouter.get('/list', async (req, res) => {
     try {
-        if (req.method === "GET") {
-            let limit;
-            let offset;
-            if (!req.query.limit || !req.query.limit) {
-                limit = 3;
-                offset = 0;
-            }
-            else {
-                limit = parseInt(req.query.limit);
-                offset = parseInt(req.query.offset);
-            }
-            const customers = await customer_model_1.Customer.find().limit(limit).skip(limit * offset);
-            res.render('list', { customer: customers });
+        let limit;
+        let offset;
+        if (!req.query.limit || !req.query.limit) {
+            limit = 3;
+            offset = 0;
         }
         else {
-            console.log(req.query.search);
+            limit = parseInt(req.query.limit);
+            offset = parseInt(req.query.offset);
         }
+        const customers = await customer_model_1.Customer.find().limit(limit).skip(limit * offset);
+        res.render('list', { customer: customers });
+    }
+    catch (err) {
+        console.log(err.message);
+    }
+});
+customerRouter.post('/list', upload.none(), async (req, res) => {
+    try {
+        let name = req.body.search;
+        const customer = await customer_model_1.Customer.find({ name: name });
+        res.render('list', { customer: customer });
     }
     catch (err) {
         console.log(err.message);
